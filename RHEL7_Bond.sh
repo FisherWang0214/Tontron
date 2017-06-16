@@ -20,7 +20,7 @@ echo -e "IPADDR=$ip\nPREFIX=$prefix\nGATEWAY=$gateway" >> /etc/sysconfig/network
 echo -e "DEVICE=$eth0\nMASTER=bond0\nTYPE=Ethernet\nBOOTPROTO=none\nONBOOT=yes\nSLAVE=yes\nUSERCTL=yes" > /etc/sysconfig/network-scripts/ifcfg-$eth0
 echo -e "DEVICE=$eth1\nMASTER=bond0\nTYPE=Ethernet\nBOOTPROTO=none\nONBOOT=yes\nSLAVE=yes\nUSERCTL=yes" > /etc/sysconfig/network-scripts/ifcfg-$eth1
 
-echo "safe@701"|passwd --stdin root
+echo password|passwd --stdin root
 systemctl disable firewalld
 systemctl restart network
 
