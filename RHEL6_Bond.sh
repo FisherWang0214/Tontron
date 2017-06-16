@@ -27,6 +27,6 @@ echo -e "DEVICE=$eth1\nBOOTPROTO=none\nONBOOT=yes\nUSERCTL=yes\nTYPE=Ethernet\nS
 echo  "alias bond0 bonding"                 >> /etc/modprobe.d/dist.conf
 echo  "options bond0 miimon=100 mode=1     >> /etc/modprobe.d/dist.conf
 
-ech "safe@701"|passwd --stdin root
+echo "safe@701"|passwd --stdin root
 
 /etc/init.d/network restart
