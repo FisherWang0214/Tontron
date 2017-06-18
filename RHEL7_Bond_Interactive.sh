@@ -1,4 +1,5 @@
 #!/bin/bash
+#This script is for RHEL7 or CentOS7 only.
 #This script setups a bonding interface bond0 and enslave two 1000Mbps Ethernet interfaces to it.
 #by Fisher Wang Liyu (QQ: 6671746)
 #This script hasn't been tested. Please be careful if you want to use it:)
@@ -9,7 +10,7 @@
 
 #set variables
 eth_list=$(dmesg | grep "Up 1000 Mbps" | sed 's/^.*igb: //g' | sed 's/NIC.*$//g' | sort | uniq)
-[ $(echo $eth_list | wc -w) -ne 2 ] && echo "The number of the active 1000Mbps Ethernet interfaces is incorrect." && exit 1
+[ $(echo $eth_list | wc -w) -ne 2 ] && echo "The number of the active 1000Mbps Ethernet interfaces isn't 2." && exit 1
 eth0=$(echo $eth_list | awk '{printf $1}')
 eth1=$(echo $eth_list | awk '{printf $2}')
 read -p "Please input the hostname: " hostname
@@ -62,7 +63,6 @@ USERCTL=no
 EOF
 
 #Make effect
-echo -e "All the configurations are done. Waiting the the network restarting.\n"
+echo -e "All the configurations are done. Waiting for the the network restarting.\n"
 echo -e "Please reset root password after the script.\n"
 systemctl restart network
-
