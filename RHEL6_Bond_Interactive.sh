@@ -1,12 +1,12 @@
 #!/bin/bash
-#This script is for RHEL6 or CentOS6 only.
-#This script sets up a bond interface bond0 and enslave two 1000Mbps Ethernet interfaces to it.
 #by Fisher Wang Liyu (QQ: 6671746)
 #Caution: This script hasn't been tested. Please be careful if you want to use it!
 
-echo "####################################################################################"
-echo "Kindly be noted that if you need to modify your input, please press ctrl+Backspace."
-echo "####################################################################################"
+echo "##############################################################################################"
+echo "This script is for RHEL6 or CentOS6 only."
+echo "This script sets up a bond interface bond0 and enslave two 1000Mbps Ethernet interfaces to it."
+echo "Kindly be noted that if you need to modify your input, please press Ctrl+Backspace."
+echo "##############################################################################################"
 
 #Set up variables
 eth_list=$(dmesg | grep "Up 1000 Mbps" | sed 's/^.*igb: //g' | sed 's/NIC.*$//g' | sort | uniq)
@@ -18,11 +18,11 @@ read -p "Please input the IP address (eg. 192.168.0.10): " ip
 read -p "Please input the netmask prefix (eg. 24): " prefix
 read -p "Please input the gateway (eg. 192.168.0.1): " gateway
 read -p "Please input the bond mode. 0 for round-robin, 1 for active-backup. (eg. 1): " mode
-while [ "$mode" != 0 -o "$mode" != 1 ]; do
-	echo -e "Only 0 or 1 is acceptable.\n"
+while [ "$mode" != "0" -a "$mode" != "1" ]; do
+	echo "Only 0 or 1 is acceptable."
 	read -p "Please input the bond mode. 0 for round-robin, 1 for active-backup. (eg. 1): " mode
 done
-if [ $mode == 0]; then
+if [ "$mode" == "0"]; then
 	mode=balance-rr;
 else
 	mode=activebackup;
@@ -59,8 +59,8 @@ EOF
 echo -e "alias bond0 bonding\noptions bond0 $mode">>/etc/modprobe.d/dist.conf
 
 #Make effect
-echo -e "All the configurations are done. Waiting for the the network restarting.\n"
-echo -e "Please remember to reset root password and modify hosts file after the script.\n"
+echo "All the configurations are done. Waiting for the the network restarting."
+echo "Please remember to reset root password and modify hosts file after the script."
 hostname $host_name
 service NetworkManager stop
 chkconfig NetworkManager off
